@@ -37,7 +37,8 @@ class QuizController extends Controller
 
     public function show($id)
     {
-        //
+        $quiz = Quiz::whereId($id)->with('results.user','top_ten.user')->withCount('questions')->first() ?? abort(404, 'Quiz not found');
+        return view('admin.quiz.show', compact('quiz'));
     }
 
     public function edit($id)
